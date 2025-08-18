@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block body %}
+
+<style>
+    .alert {
+        padding: 10px;
+        color: white;
+        background-color: green;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        width: 400px;
+        opacity: 1;
+        /* Fully visible */
+    }
+
+    input {
+        border: 1px solid rgb(216, 216, 216);
+        padding: 10px;
+        width: 100%;
+    }
+
+    label {
+        width: 100%;
+        font-size: 17px;
+    }
+</style>
+
+<!-- breadcrumb -->
+<div class="container" style="margin-top: 50px;">
+    <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+        <a href="{% url 'index' %}" class="stext-109 cl8 hov-cl1 trans-04">
+            Home
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+
+        <span class="stext-109 cl4">
+            Checkout
+        </span>
+    </div>
+</div>
+
+
+<!-- Shoping Cart -->
+<div class="bg0 p-t-75 p-b-85">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-lg-9 col-xl-7" style="width: 100%;">
+                <div class="bor10 p-lr-40 p-t-30 p-b-40 m-lr-0-xl p-lr-15-sm">
+                    <form method="post">
+                        {% csrf_token %}
+                        <h1 class="txt-center m-b-20">Details</h1>
+                        <hr style="margin-bottom: 25px;">
+                        {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert">{{ message }}</div>
+                        {% endfor %}
+                        {% endif %}
+                        <div class="size-219 m-b-20">
+                            <label class="m-b-10">Full Name</label>
+                            <input type="text" name="full_name" id="" placeholder="Full Name">
+                        </div>
+                        <div class="size-219 d-flex">
+                            <label class="m-b-10 m-r-10">Email Address</label>
+                            <label class="m-b-10">Phone No.</label>
+                        </div>
+                        <div class="size-219 d-flex m-b-20">
+                            <input type="email" name="email" id="" class="m-r-10" placeholder="Email Address">
+                            <input type="number" name="phone_number" id=""
+                                oninput="this.value = this.value.replace(/\D/g, '').slice(0, 11);"
+                                placeholder="Enter Phone Number">
+                        </div>
+                        <div class="size-219 d-flex">
+                            <label class="m-b-10 m-r-10">House No./Society Name</label>
+                            <label class="m-b-10">Landmark/Area Name</label>
+                        </div>
+                        <div class="size-219 d-flex m-b-20">
+                            <input type="text" name="house_society_name" id="" class="m-r-10"
+                                placeholder="A-101,Society Name">
+                            <input type="text" name="landmark_area" id="" placeholder="Landmark/Area Name">
+                        </div>
+                        <div class="size-219 d-flex">
+                            <label class="m-b-10 m-r-10">City Name</label>
+                            <label class="m-b-10 m-r-10">State Name</label>
+                            <label class="m-b-10">Pin Code</label>
+                        </div>
+                        <div class="size-219 d-flex m-b-20">
+                            <input type="text" name="city" id="" class="m-r-10" placeholder="City Name">
+                            <input type="text" name="state" id="" class="m-r-10" placeholder="State Name">
+                            <input type="text" name="pin_code" id="" placeholder="Pin Code">
+                        </div>
+                        <div class="flex-c-m flex-w w-full p-t-45">
+                            <button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04"
+                                type="submit">
+                                Subscribe
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-10 col-lg-7 col-xl-5">
+                <div class="bor10 p-lr-40 p-t-30 p-b-40 m-lr-0-xl p-lr-15-sm">
+                    <h2 class="txt-center m-b-20">Your Product</h2>
+                    <hr>
+                    <div class="header-cart-content flex-w js-pscroll">
+                        <ul class="header-cart-wrapitem w-full">
+                            {% if cart_items %}
+                            <li class="header-cart-item flex-w flex-t m-b-12">
+                                {% for item in cart_items %}
+                                <a href="{% url 'remove_from_cart' item.cart_key %}">
+                                    <div class="header-cart-item-img">
+                                        <img src="{{item.image1}}" alt="IMG" />
+                                    </div>
+                                </a>
+
+                                <div class="header-cart-item-txt p-t-8">
+                                    <a href="#" class="header-cart-item-name hov-cl1 trans-04">
+                                        <strong>Name:</strong> {{item.name}}
+                                    </a>
+                                    <p><strong>Size:</strong> {{item.size}}</p>
+                                    <p><strong>Color:</strong> {{item.color}}</p>
+
+                                    <span class="header-cart-item-info"> {{item.quantity}} x {{item.price}} </span>
+                                </div>
+                                {% endfor %}
+                            </li>
+                        </ul>
+                        <div class="w-full">
+                            <div class="header-cart-total w-full p-t-40">Total: {{total_price}}</div>
+                        </div>
+                        {% else %}
+                        <p class="text-center mt-4">Your cart is empty.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
