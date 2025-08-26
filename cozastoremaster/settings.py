@@ -13,8 +13,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 
-RAZORPAY_KEY_ID = "rzp_test_KBECdjH0WQyfJD"
-RAZORPAY_KEY_SECRET = "nSpRvosLOp7F9YA7uMX3Rw0X"
+RAZORPAY_KEY_ID = "rzp_test_R9rHIreP0NIrBl"
+RAZORPAY_KEY_SECRET = "xezmpd6DH3OuQqz0O7R1W0cv"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
